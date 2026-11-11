@@ -12,34 +12,36 @@ DevFlow AI is an autonomous AI development orchestration platform designed to br
 |                             USER INTERFACES                           |
 |  +---------------------------+       +-----------------------------+  |
 |  |     Web Application       |       |      Browser Extension      |  |
-|  |       (apps/web)          |       |      (apps/extension)       |  |
+|  |   (apps/web - Phase 7)    |       |  (apps/extension - Phase 8) |  |
 |  +-------------+-------------+       +--------------+--------------+  |
 +----------------|------------------------------------|-----------------+
                  |                                    |
                  v                                    v
 +-----------------------------------------------------------------------+
 |                            BACKEND SERVER                             |
-|                             (apps/server)                             |
-|  - API Gateway & WebSocket Session Server                             |
-|  - Workspace & Project State Manager                                  |
-|  - Security & Authentication Boundaries                               |
+|                        (apps/server - Phase 1)                        |
+|  - Unified Single Framework API Gateway (Fastify or Express)          |
+|  - Realtime WebSocket Session Server                                  |
+|  - Persistence Foundation (Task state, runs, checkpoints)             |
 +-----------------------------------|-----------------------------------+
                                     |
                                     v
 +-----------------------------------------------------------------------+
 |                          ORCHESTRATION LAYER                          |
-|                       (packages/orchestrator)                         |
-|  - Finite State Machine / Directed Graph Engine                       |
-|  - Task Planner, Dispatcher & Retry Supervisor                        |
+|                     (packages/orchestrator)                           |
+|  - DAG Task Planner & Execution State Machine (Phase 3)               |
+|  - Autonomous Closed Loop & Self-Healing Retry Supervisor (Phase 5)   |
 +--------+--------------------------+-------------------------+---------+
          |                          |                         |
          v                          v                         v
 +-------------------+      +------------------+      +------------------+
 |   AGENT ADAPTERS  |      |  CONTEXT ENGINE  |      |   VERIFICATION   |
 | (agent-adapters)  |      | (context-engine) |      |  (verification)  |
-| - Antigravity     |      | - Token Budget   |      | - Unit & E2E     |
-| - Claude/ChatGPT  |      | - Diff Context   |      | - Static Lint    |
-| - CLI Subagents   |      | - Memory Vault   |      | - Quality Gate   |
+| - Antigravity CLI |      | - Conversation   |      | - Deterministic  |
+|   Proof-of-Concept|      |   Import & Parser|      |   Quality Gates  |
+|   & Adapter       |      |   (Phase 2)      |      | - Static Lint,   |
+|   (Phase 4)       |      | - Token Budget   |      |   Unit & E2E     |
+| - Local CLI Agents|      |   Optimization   |      |   Tests (Phase 6)|
 +--------+----------+      +------------------+      +------------------+
          |
          v
@@ -47,14 +49,14 @@ DevFlow AI is an autonomous AI development orchestration platform designed to br
 |                            INTEGRATION LAYER                          |
 |  +--------------------------------+   +----------------------------+  |
 |  |           MCP Server           |   |      Antigravity Skills    |  |
-|  |      (packages/mcp-server)     |   |    (skills/antigravity)    |  |
+|  |  (packages/mcp-server - Phase 4)   |   | (skills/antigravity - Ph 8)|  |
 |  +--------------------------------+   +----------------------------+  |
 +-----------------------------------------------------------------------+
                                     |
                                     v
 +-----------------------------------------------------------------------+
 |                             SHARED UTILS                              |
-|                          (packages/shared)                            |
+|                      (packages/shared - Phase 1)                      |
 |             Types, Schemas, Telemetry, Common Utilities               |
 +-----------------------------------------------------------------------+
 ```
@@ -64,26 +66,32 @@ DevFlow AI is an autonomous AI development orchestration platform designed to br
 ## 3. Package and Application Boundaries
 
 ### Applications (`apps/`)
-- **`apps/web`**: Web-based control plane and developer dashboard. Provides interactive job tracking, visual pipeline monitoring, log streaming, and human-in-the-loop approvals.
-- **`apps/server`**: Central API service handling communication between frontends, orchestrators, and external notification hooks.
-- **`apps/extension`**: Browser extension capturing context and interaction prompts directly from web-based chat agents (ChatGPT, Claude web interfaces) into DevFlow pipelines.
+- **`apps/web` (Planned - Phase 7)**: Web-based control plane and developer dashboard. Provides interactive job tracking, visual DAG pipeline monitoring, log streaming, and human-in-the-loop approvals.
+- **`apps/server` (Planned - Phase 1)**: Central API and WebSocket service built upon a single evaluated framework (Fastify or Express). Houses the persistence foundation (state, runs, checkpoints) required by the orchestration engine.
+- **`apps/extension` (Planned - Phase 8)**: Browser extension capturing context and interaction prompts directly from web-based chat interfaces (ChatGPT, Claude) into DevFlow pipelines.
 
 ### Core Packages (`packages/`)
-- **`packages/orchestrator`**: The workflow execution brain. Manages pipeline state, agent task queueing, retry logic, error classification, and task completion verification.
-- **`packages/agent-adapters`**: Pluggable interface abstraction layer connecting DevFlow to different AI coding engines (Google Antigravity, local CLI harnesses, headless agent runtimes).
-- **`packages/context-engine`**: Semantic code retrieval, smart file bundling, token budget optimization, and workspace diff distillation.
-- **`packages/verification`**: Automated test runners, linters, security scanners, build checkers, and rule conformance validators that ensure code output meets acceptance criteria.
-- **`packages/mcp-server`**: Model Context Protocol (MCP) server exposing tools, resources, and workflows to MCP-compliant host agents.
-- **`packages/shared`**: Shared TypeScript types, Zod schemas, logging wrappers, error standards, and constants.
+- **`packages/shared` (Planned - Phase 1)**: Shared TypeScript types, Zod domain schemas, error classes, and common utilities governing all inter-package contracts.
+- **`packages/context-engine` (Planned - Phase 2)**: Conversation import parsers (JSON, Markdown), prompt normalization, and token-budget optimization.
+- **`packages/orchestrator` (Planned - Phases 3 & 5)**: The workflow execution brain.
+  - *Phase 3 (Orchestration Engine)*: Task DAG graph planner, step dependency management, and lifecycle state machine.
+  - *Phase 5 (Autonomous Loop)*: Closed-loop execution supervisor, failure classification, dynamic retry supervisor, and session recovery.
+- **`packages/agent-adapters` (Planned - Phase 4)**: Pluggable interface abstraction layer connecting DevFlow to AI coding engines, validated with a minimal Google Antigravity CLI proof-of-concept before architectural coupling.
+- **`packages/mcp-server` (Planned - Phase 4)**: Model Context Protocol (MCP) server exposing workspace tools and task progress to host agents.
+- **`packages/verification` (Planned - Phase 6)**: Dedicated, deterministic verification subsystem. Operates independently of agent orchestration to run automated test harnesses, linters, git diff validators, and acceptance criteria checks.
 
 ### Skills & Customizations (`skills/`)
-- **`skills/antigravity`**: Specialized agent skills, workflow definitions, and rules tailored for Google Antigravity pairings.
+- **`skills/antigravity` (Planned - Phase 8)**: Specialized agent skills, workflow definitions, and behavioral rules tailored for Google Antigravity pairings.
+
+### Infrastructure & Tooling (`scripts/`, `tests/`, `.github/`)
+- **`tests/` & `.github/workflows/` (Planned - Phase 9)**: Cross-package integration suites, automated CI/CD pipelines, and production containerization.
 
 ---
 
-## 4. Key Architectural Tenets
-1. **Separation of Concerns**: UI, orchestration, model integration, and code execution are strictly decoupled behind defined schema contracts.
-2. **Defensive Verification**: No agent output is accepted until verified by deterministic checks (linter, unit tests, build validation).
-3. **Pluggable Agent Backends**: Modular agent adapters ensure DevFlow AI is never locked to a single model provider or execution harness.
-4. **Observable by Design**: Structured logs, execution traces, and telemetry provide clear visibility into every agent decision.
-
+## 4. Key Architectural Tenets & Subsystem Separation
+1. **Explicit Subsystem Boundaries**: The **Autonomous Loop** (`packages/orchestrator` - Phase 5) and the **Verification Engine** (`packages/verification` - Phase 6) are strictly decoupled. The orchestrator supervises agent execution and retries; the verification engine enforces deterministic, non-agentic quality gates.
+2. **Persistence-Backed Orchestration**: The persistence foundation in `apps/server` (Phase 1) directly underpins the DAG state machine (Phase 3), ensuring state durability and session recovery.
+3. **Single Backend Framework**: Rather than supporting multiple competing web frameworks, Phase 1 evaluates and commits to exactly one framework (Fastify or Express) based on throughput and developer ergonomics.
+4. **Validation Before Architectural Dependency**: External agent runtimes (specifically Google Antigravity in Phase 4) must pass a minimal CLI invocation proof-of-concept before core adapters depend upon them.
+5. **Separation of Concerns**: UI, orchestration, model integration, and code verification are strictly decoupled behind type-safe schema contracts (`packages/shared`).
+6. **Observable by Design**: Structured logs, execution traces, and telemetry provide clear visibility into every agent decision.

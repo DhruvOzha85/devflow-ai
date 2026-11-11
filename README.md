@@ -19,13 +19,14 @@ Modern software engineering increasingly relies on AI reasoning models (such as 
 ---
 
 ## 2. Planned Capabilities
-- **Chat Capture**: Capture project specifications directly from conversational AI chats (via browser extension or API).
-- **DAG Workflow Engine**: Decompose requests into structured task graphs with dependencies and parallel workstreams.
-- **Dynamic Context Pruning**: Provide agents with precise code context, avoiding token exhaustion while maximizing code comprehension.
-- **Google Antigravity Integration**: Native adapter and custom skills tailored for Google Antigravity coding environments.
+- **Conversation Import**: Ingest and parse exported project specifications and threads from ChatGPT and Claude into structured tasks.
+- **DAG Workflow Engine**: Decompose requests into structured task graphs with dependencies, lifecycle tracking, and state persistence.
+- **Antigravity CLI Integration**: Validated CLI harness and custom agent skills tailored for Google Antigravity coding environments.
 - **MCP Tool Integration**: Standard Model Context Protocol (MCP) server for tool discovery, invocation, and workspace instrumentation.
-- **Automated Verification Loop**: Built-in test execution, lint checks, build checks, and secret scans before accepting changes.
+- **Autonomous Execution Loop**: Supervised agent dispatching, execution event capture, failure classification, and retry management.
+- **Dedicated Verification Engine**: Deterministic test runners, lint checks, build checks, and secret scans independent of agent orchestration.
 - **Web Control Plane**: Interactive real-time dashboard visualizing runs, logs, diffs, and approval gates.
+- **Browser Extension**: One-click conversation export directly from web-based chat interfaces into DevFlow pipelines.
 
 ---
 
@@ -33,6 +34,8 @@ Modern software engineering increasingly relies on AI reasoning models (such as 
 - **Monorepo Management**: [pnpm](https://pnpm.io/) Workspaces
 - **Runtime Environment**: [Node.js](https://nodejs.org/) (Target: v22 LTS)
 - **Language**: TypeScript (ESM modules)
+- **Backend Framework**: Single selected framework (Fastify or Express evaluated in Phase 1)
+- **Persistence Foundation**: Structured state store (e.g. SQLite / document store) established in Phase 1
 - **Protocol & Interfaces**: Model Context Protocol (MCP), REST, WebSockets
 - **Agent Ecosystem**: Google Antigravity, Anthropic Claude, OpenAI, and local coding CLI agents
 - **Testing & Quality**: Deterministic test runners, ESLint/Prettier (configured in upcoming phases)
@@ -44,26 +47,26 @@ Modern software engineering increasingly relies on AI reasoning models (such as 
 ```text
 devflow-ai/
 ├── apps/
-│   ├── extension/          # Browser extension for chat context capture
-│   ├── server/             # API Gateway, WebSocket hub, and project state
-│   └── web/                # Web dashboard and monitoring interface
+│   ├── extension/          # Browser extension for chat context capture (Phase 8)
+│   ├── server/             # API Gateway, WebSocket hub, and persistence (Phase 1)
+│   └── web/                # Web dashboard and monitoring interface (Phase 7)
 ├── packages/
-│   ├── agent-adapters/     # Adapters for Antigravity, Claude, and CLI agents
-│   ├── context-engine/     # AST parsing, code retrieval, token optimization
-│   ├── mcp-server/         # Model Context Protocol server implementation
-│   ├── orchestrator/       # DAG task scheduler, state machine, retry supervisor
-│   ├── shared/             # Common TypeScript types, schemas, and utilities
-│   └── verification/       # Automated test runner and quality gates
+│   ├── agent-adapters/     # Adapters for Antigravity and CLI agents (Phase 4)
+│   ├── context-engine/     # Conversation parsing and token optimization (Phase 2)
+│   ├── mcp-server/         # Model Context Protocol server implementation (Phase 4)
+│   ├── orchestrator/       # DAG task scheduler (Phase 3) & Autonomous Loop (Phase 5)
+│   ├── shared/             # Common TypeScript types, schemas, and utilities (Phase 1)
+│   └── verification/       # Automated test runner and deterministic gates (Phase 6)
 ├── skills/
-│   └── antigravity/        # Custom Antigravity skills and rules
+│   └── antigravity/        # Custom Antigravity skills and rules (Phase 8)
 ├── docs/
 │   ├── architecture/       # System architecture documentation
-│   ├── phases/             # Phase-by-phase implementation plans
+│   ├── phases/             # Phase-by-phase implementation plans (Phases 0–9)
 │   └── reports/            # Execution and milestone reports
-├── tests/                  # Cross-package integration and E2E test suites
-├── scripts/                # Development, build, and CI/CD utility scripts
+├── tests/                  # Cross-package integration and E2E test suites (Phase 9)
+├── scripts/                # Development, build, and CI/CD utility scripts (Phase 9)
 ├── .github/
-│   └── workflows/          # GitHub Actions CI/CD workflows
+│   └── workflows/          # GitHub Actions CI/CD workflows (Phase 9)
 ├── .editorconfig           # Consistent editor formatting rules
 ├── .gitignore              # Ignored files, outputs, secrets, and caches
 ├── LICENSE                 # MIT License
@@ -103,7 +106,7 @@ Before getting started, ensure you have the following installed on your machine:
 ---
 
 ## 7. Development Workflow
-- **Branching Strategy**: Branch from `main` using descriptive names (e.g., `feat/phase-1-schemas`, `fix/adapter-timeout`).
+- **Branching Strategy**: Branch from `main` using descriptive names (e.g., `feat/phase-1-core-backend`).
 - **Commits**: Follow conventional commits (`feat:`, `fix:`, `docs:`, `chore:`).
 - **Quality Gates**: All code submissions must pass static analysis and unit tests before merging.
 - **Security**: Never commit `.env` files, credentials, or proprietary API tokens.
@@ -111,23 +114,24 @@ Before getting started, ensure you have the following installed on your machine:
 ---
 
 ## 8. Current Development Status
-- **Current Milestone**: **Phase 0 — Foundation Setup** (Completed)
-- **Focus**: Setting up workspace architecture, repository hygiene, runtime targets, and documentation.
-- **Application Logic**: No application, agent, or database code is implemented yet in adherence to Phase 0 constraints.
+- **Current Milestone**: **Phase 0 — Foundation** (Completed & Audited)
+- **Current Deliverables**: Monorepo skeleton, pnpm workspaces, Node 22 LTS target, repository hygiene, and authoritative architecture/phase specifications.
+- **Application Logic Notice**: No application code, database drivers, agent adapters, or frontend components have been implemented yet. All future capabilities belong to Phases 1 through 9.
 
 ---
 
-## 9. Planned Implementation Phases
-See [docs/phases/README.md](docs/phases/README.md) for the detailed phase roadmap:
-1. **Phase 0**: Foundation Setup *(Current)*
-2. **Phase 1**: Shared Core & Contract Schemas
-3. **Phase 2**: Context Engine & Workspace Intelligence
-4. **Phase 3**: Agent Adapters & MCP Server Integration
-5. **Phase 4**: Orchestrator & Task Lifecycle Engine
-6. **Phase 5**: Verification & Quality Assurance Pipeline
-7. **Phase 6**: Backend Service & API Gateway
-8. **Phase 7**: Web Dashboard & Browser Extension
-9. **Phase 8**: Autonomous Integration & Production Hardening
+## 9. Authoritative Implementation Roadmap (Phases 0–9)
+See [docs/phases/README.md](docs/phases/README.md) for the detailed phase breakdown:
+- **Phase 0**: **Foundation** *(Completed)* — Monorepo structure, tooling configuration, runtime environment, and baseline architecture.
+- **Phase 1**: **Core Backend** *(Planned)* — Single framework selection (Fastify vs Express), shared domain contracts (`packages/shared`), API runtime, and persistence foundation (`apps/server`).
+- **Phase 2**: **Conversation Import** *(Planned)* — ChatGPT & Claude export parsers (JSON/Markdown), prompt normalization, context extraction (`packages/context-engine`).
+- **Phase 3**: **Orchestration Engine** *(Planned)* — DAG task planner, execution state machine, lifecycle tracking, persistence integration (`packages/orchestrator`).
+- **Phase 4**: **Antigravity Integration** *(Planned)* — Minimal CLI proof-of-concept, agent adapters (`packages/agent-adapters`), MCP server tools (`packages/mcp-server`).
+- **Phase 5**: **Autonomous Loop** *(Planned)* — Supervised agent dispatching, execution event capture, failure classification, dynamic retry supervisor (`packages/orchestrator`).
+- **Phase 6**: **Verification Engine** *(Planned)* — Deterministic quality gates, test runner wrappers, static analysis, diff acceptance verification (`packages/verification`).
+- **Phase 7**: **Web Dashboard** *(Planned)* — Real-time developer control plane, DAG progress visualizer, log streaming, human approval UI (`apps/web`).
+- **Phase 8**: **Extension & Skills** *(Planned)* — Browser extension for web chat capture (`apps/extension`), specialized Antigravity prompt skills & rules (`skills/antigravity`).
+- **Phase 9**: **Production Readiness** *(Planned)* — End-to-end integration test suite, CI/CD pipelines, security scanning automation, deployment configurations.
 
 ---
 
