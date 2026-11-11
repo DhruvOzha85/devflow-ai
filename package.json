@@ -1,0 +1,19 @@
+{
+  "name": "devflow-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Autonomous AI Development Orchestration Platform",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "lint": "echo \"Phase 0: Linting placeholder\"",
+    "test": "echo \"Phase 0: Testing placeholder\"",
+    "build": "echo \"Phase 0: Build placeholder\""
+  }
+}
+
